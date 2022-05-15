@@ -11,23 +11,25 @@
  */
 class Solution {
 public:
-    int maxDistance(TreeNode* root)
-    {
-        if(root==NULL)
-            return 0;
-        return max(maxDistance(root->left),maxDistance(root->right))+1;
-    }
-    int sum(TreeNode* root,int dist)
-    {
-        if(root==NULL)
-            return 0;
-        if(dist==1)
-            return root->val;
-        return sum(root->left,dist-1)+sum(root->right,dist-1);
-    }
     int deepestLeavesSum(TreeNode* root) 
     {
-        int dist=maxDistance(root);
-        return sum(root,dist);
+        int sum=0;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            sum=0;
+            for(int i=q.size()-1;i>=0;i--)
+            {
+                TreeNode* f=q.front();
+                q.pop();
+                sum+=f->val;
+                if(f->left)
+                    q.push(f->left);
+                if(f->right)
+                    q.push(f->right);
+            }
+        }
+        return sum;
     }
 };
