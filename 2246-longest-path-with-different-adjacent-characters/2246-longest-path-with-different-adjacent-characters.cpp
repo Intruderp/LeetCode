@@ -1,20 +1,29 @@
 class Solution {
 public:
     vector<int> adj[100000];
-    int dist[100000];
-    int ans=1;
-    void dfs(int node,string &s)
+    int ans=0;
+    int dfs(int node,int par,string &s)
     {
-        dist[node]=1;
+        int mx=0,mx2=0,x;
         for(auto &child:adj[node])
         {
-            dfs(child,s);
-            if(s[node]!=s[child])
+            if(child!=par)
             {
-                ans=max(ans,dist[node]+dist[child]);
-                dist[node]=max(dist[node],dist[child]+1);
+                x=dfs(child,node,s);
+                if(s[child]!=s[node])
+                {
+                    if(x>=mx)
+                    {
+                        mx2=mx;
+                        mx=x;
+                    }
+                    else if(x>mx2)
+                        mx2=x;
+                }
             }
         }
+        ans=max(ans,mx+mx2+1);
+        return mx+1;
     }
     int longestPath(vector<int>& parent, string s) 
     {
@@ -22,8 +31,9 @@ public:
         for(int i=1;i<n;i++)
         {
             adj[parent[i]].push_back(i);
+            adj[i].push_back(parent[i]);
         }
-        dfs(0,s);
+        dfs(0,-1,s);
         return ans;
     }
 };
