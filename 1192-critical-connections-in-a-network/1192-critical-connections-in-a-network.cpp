@@ -1,30 +1,36 @@
 class Solution {
 public:
-    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
-        disc = vector<int>(n);
-        low = vector<int>(n);
-        for (auto conn : connections) {
-            edgeMap[conn[0]].push_back(conn[1]);
-            edgeMap[conn[1]].push_back(conn[0]);
+    vector<vector<int>> ans;
+    void dfs(int node,int par,int vis[],vector<int> adj[],int low[],int in[],int &timer)
+    {
+        vis[node]=1;
+        in[node]=low[node]=timer++;
+        for(auto &child:adj[node])
+        {
+            if(child==par)
+                continue;
+            if(vis[child])
+                low[node]=min(low[node],in[child]);
+            else
+            {
+                dfs(child,node,vis,adj,low,in,timer);
+                if(low[child]>in[node])
+                    ans.push_back({node,child});
+                low[node]=min(low[node],low[child]);
+            }
         }
-        dfs(0, -1);
+    }
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) 
+    {
+        int vis[n],timer=0,low[n],in[n];
+        vector<int> adj[n];
+        memset(vis,0,sizeof(vis));
+        for(auto &connection:connections)
+        {
+            adj[connection[0]].push_back(connection[1]);
+            adj[connection[1]].push_back(connection[0]);
+        }
+        dfs(0,-1,vis,adj,low,in,timer);
         return ans;
     }
-    void dfs(int curr, int prev) {
-        disc[curr] = low[curr] = time++;
-        for (int next : edgeMap[curr]) {
-            if (disc[next] == 0) {
-                dfs(next, curr);
-                low[curr] = min(low[curr], low[next]);
-            } else if (next != prev)
-                low[curr] = min(low[curr], disc[next]);
-            if (low[next] > disc[curr]) 
-                ans.push_back({curr, next});
-        }
-    }
-private:
-    vector<int> disc{0}, low{0};
-    int time = 1;
-    vector<vector<int>> ans;
-    unordered_map<int, vector<int>> edgeMap;
 };
