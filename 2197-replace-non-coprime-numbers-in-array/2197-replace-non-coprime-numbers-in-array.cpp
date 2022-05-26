@@ -6,10 +6,15 @@ public:
         int b,g;
         for(int i:nums)
         {
-            while(ans.size() and __gcd(ans.back(),i)>1)
+            g=1;
+            if(ans.size())
+                g=__gcd(i,ans.back());
+            while(ans.size() and g>1)
             {
-                i=((long long)i*ans.back())/__gcd(ans.back(),i);
+                i=((long long)i*ans.back())/g;
                 ans.pop_back();
+                if(ans.size())
+                    g=__gcd(i,ans.back());
             }
             ans.push_back(i);
         }
