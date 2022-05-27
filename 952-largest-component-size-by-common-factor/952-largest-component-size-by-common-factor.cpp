@@ -1,51 +1,62 @@
-class Solution {
-public:
-    unordered_map<int,vector<int>> m;
-    vector<int> factors[100001];
-    int vis[100001],cc=0;
-    void dfs(int src)
+class DSU
+{
+    private:
+    vector<int> par,rank;
+    public:
+    DSU(int n)
     {
-        cc++;
-        vis[src]=1;
-        for(int &factor:factors[src])
+        par.resize(n+1);
+        rank.resize(n+1,0);
+        iota(par.begin(),par.end(),0);
+    }
+    int find(int a)
+    {
+        if(a==par[a])
+            return a;
+        return par[a]=find(par[a]);
+    }
+    void Union(int a,int b)
+    {
+        a=find(a);
+        b=find(b);
+        if(a==b)
+            return ;
+        if(rank[a]>rank[b])
         {
-           while(m.count(factor) and m[factor].size())
-           {
-               int b=m[factor].back();
-               m[factor].pop_back();
-               if(vis[b]==0)
-                   dfs(b);
-           }
+            par[b]=a;
+        }
+        else if(rank[a]<rank[b])
+        {
+            par[a]=b;
+        }
+        else
+        {
+            rank[a]++;
+            par[b]=a;
         }
     }
-    int largestComponentSize(vector<int>& nums)
-    {
-        int largestComponent=0;
+};
+class Solution {
+public:
+    int largestComponentSize(vector<int>& nums) {
+        int m=*max_element(nums.begin(),nums.end()),ans=0;
+        DSU ds(m);
+        unordered_map<int,int> freq;
         for(int &i:nums)
         {
-            for(int j=1;j*j<=i;j++)
+            for(int j=2;j*j<=i;j++)
             {
                 if(i%j==0)
                 {
-                    if(j!=1)
-                        m[j].push_back(i);
-                    m[i/j].push_back(i);
-                    if(j!=1)
-                        factors[i].push_back(j);
-                    if(i/j!=j)
-                        factors[i].push_back(i/j);
+                    ds.Union(i,j);
+                    ds.Union(i,i/j);
                 }
             }
         }
         for(int &i:nums)
         {
-            if(vis[i]==0)
-            {
-                cc=0;
-                dfs(i);
-                largestComponent=max(largestComponent,cc);
-            }
+            ans=max(ans,++freq[ds.find(i)]);
         }
-        return largestComponent;
+        return ans;
     }
 };
