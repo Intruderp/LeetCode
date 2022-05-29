@@ -3,8 +3,8 @@ public:
     int dp[100][21][101];
     int help(int i,int p,int t,int n,int target,vector<int>& houses, vector<vector<int>>& cost)
     {
-        // if(t>target)
-        //     return 5000000;
+        if(t>target)
+            return 5000000;
         if(i==houses.size())
             return t!=target ? 5000000:0;
         if( dp[i][p][t]!=-1)
