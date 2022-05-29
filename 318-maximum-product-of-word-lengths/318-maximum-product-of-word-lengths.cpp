@@ -19,17 +19,8 @@ public:
         {
             for(int j=i+1;j<n;j++)
             {
-                poss=true;
-                for(int bit=0;bit<26;bit++)
-                {
-                    if(((1<<bit)&v[i]) and ((1<<bit)&v[j]))
-                    {
-                        poss=false;
-                        break;
-                    }
-                }
                 int len=words[i].length()*words[j].length();
-                if(poss)
+                if((v[i]&v[j])==0)
                     ans=max(ans,len);
             }
         }
