@@ -3,13 +3,14 @@ public:
     int maxProduct(vector<string>& words) 
     {
         int ans=0,n=words.size();
-        vector<string> v;
+        vector<int> v;
+        int bit=0;
         for(string &s:words)
         {
-            string bit(26,'0');
+            bit=0;
             for(char &c:s)
             {
-                bit[c-'a']='1';
+                bit|=(1<<(c-'a'));
             }
             v.push_back(bit);
         }
@@ -21,7 +22,7 @@ public:
                 poss=true;
                 for(int bit=0;bit<26;bit++)
                 {
-                    if(v[i][bit]=='1' and v[j][bit]=='1')
+                    if(((1<<bit)&v[i]) and ((1<<bit)&v[j]))
                     {
                         poss=false;
                         break;
