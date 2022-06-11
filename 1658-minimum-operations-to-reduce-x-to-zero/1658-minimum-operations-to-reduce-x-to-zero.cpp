@@ -1,22 +1,18 @@
 class Solution {
 public:
     int minOperations(vector<int>& nums, int x) {
-        int sum=0,cnt=0,n=nums.size(),ans=n+1;
-        unordered_map<int,int> m;
-        for(int i=n-1;i>=0;i--)
+        int n=nums.size(),i=0,j=0,ans=n+1,sum=accumulate(nums.begin(),nums.end(),0);
+        while(i<n)
         {
-            sum+=nums[i];
-            m[sum]=i;
-        }
-        for(int i=0;i<n;i++)
-        {
-            if(m.count(x) and m[x]>=i)
-                ans=min(ans,i+n-m[x]);
+            while(sum>x and j<n)
+            {
+                sum-=nums[j];
+                j++;
+            }
+            if(sum==x)
+                ans=min(ans,i+n-j);
             x-=nums[i];
-            if(x==0)
-                ans=min(ans,i+1);
-            else if(x<0)
-                break;
+            i++;
         }
         return ans==n+1 ? -1:ans;
     }
