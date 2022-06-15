@@ -4,8 +4,6 @@ public:
     {
         return x.length()<y.length();
     }
-    unordered_map<int,vector<string>> m;
-    unordered_map<string,int> dp;
     bool isPredecessor(string &x,string &y)
     {
         int i=0,j=0,cnt=0;
@@ -26,29 +24,30 @@ public:
         }
         return true;
     }
-    int help(string &s)
-    {
-        if(dp.count(s))
-            return dp[s];
-        int len=s.length();
-        if(m.count(len+1)==0)
-            return 1;
-        int ans=1;
-        for(auto &y:m[len+1])
-        {
-            if(isPredecessor(s,y))
-                ans=max(ans,help(y)+1);
-        }
-        return dp[s]=ans;
-    }
     int longestStrChain(vector<string>& words)
     {
+        unordered_map<int,vector<string>> m;
+        unordered_map<string,int> dp;
         for(auto &s:words)
+        {
             m[s.length()].push_back(s);
-        sort(words.begin(),words.end(),comp);
-        int ans=0;
+            dp[s]=1;
+        }
+        sort(words.rbegin(),words.rend(),comp);
+        int ans=0,len;
         for(auto &s:words)
-            ans=max(ans,help(s));
+        {
+            len=s.length();
+            if(m.count(len+1))
+            {
+                for(string &x:m[len+1])
+                {
+                    if(isPredecessor(s,x))
+                        dp[s]=max(dp[s],dp[x]+1);
+                }
+            }
+            ans=max(ans,dp[s]);
+        }
         return ans;
     }
 };
