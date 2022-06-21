@@ -17,8 +17,10 @@ public:
             else
                 bricks-=q.top();
             q.pop();
+            if(bricks<0)
+                return false;
         }
-        return bricks>=0;
+        return true;
     }
     int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
         int n=heights.size(),low=1,mid,high=n-1,ans=0;
