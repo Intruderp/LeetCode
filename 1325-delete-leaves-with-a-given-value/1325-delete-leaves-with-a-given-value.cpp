@@ -11,47 +11,12 @@
  */
 class Solution {
 public:
-    bool b;
-    bool isLeaf(TreeNode* root)
+    TreeNode* removeLeafNodes(TreeNode* root, int target) 
     {
         if(root==NULL)
-            return false;
-        if(root->left==NULL and root->right==NULL)
-            return true;
-        return false;
-    }
-    void dfs(TreeNode *root,int target)
-    {
-        if(root==NULL)
-            return ;
-        if(isLeaf(root->left))
-        {
-            if(root->left->val==target)
-            {
-                b=true;
-                root->left=NULL;
-            }
-        }
-        else 
-            dfs(root->left,target);
-        if(isLeaf(root->right))
-        {
-            if(root->right->val==target)
-            {
-                b=true;
-                root->right=NULL;
-            }
-        }
-        else 
-            dfs(root->right,target);
-    }
-    TreeNode* removeLeafNodes(TreeNode* root, int target) {
-        do{
-            b=false;
-            dfs(root,target);
-        }while(b);
-        if(isLeaf(root) and root->val==target)
             return NULL;
-        return root;
+        root->left=removeLeafNodes(root->left,target);
+        root->right=removeLeafNodes(root->right,target);
+        return (root->left==root->right and root->val==target) ? NULL :root;
     }
 };
