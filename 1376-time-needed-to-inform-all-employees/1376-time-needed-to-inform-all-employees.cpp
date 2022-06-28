@@ -16,6 +16,8 @@ public:
         while(!q.empty()){
             auto t=q.top();
             q.pop();
+            if(dist[t.second]<t.first)
+                continue;
             for(auto &child:adj[t.second])
             {
                 if(dist[child]>t.first+informTime[manager[child]])
