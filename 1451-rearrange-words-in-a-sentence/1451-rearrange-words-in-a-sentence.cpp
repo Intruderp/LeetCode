@@ -3,6 +3,7 @@ public:
     string arrangeWords(string text) {
         map<int,vector<string>> m;
         string s;
+        text[0]=tolower(text[0]);
         for(char &c:text)
         {
             if(c==' ')
@@ -11,7 +12,6 @@ public:
                 s.clear();
                 continue;
             }
-            c=tolower(c);
             s.push_back(c);
         }
         m[s.length()].push_back(s);
