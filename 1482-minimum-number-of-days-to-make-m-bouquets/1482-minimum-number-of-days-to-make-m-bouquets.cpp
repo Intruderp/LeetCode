@@ -3,27 +3,20 @@ public:
     int n;
     bool check(vector<int>&b,int x,int m,int k)
     {
-        vector<int> notBloomed;
-        for(int i=n-1;i>=0;i--)
+        int cur=0;
+        for(int i=0;i<n;i++)
         {
-            if(b[i]>x)
-                notBloomed.push_back(i);
-        }
-        for(int i=0;i<n;)
-        {
-            if(notBloomed.size() and notBloomed.back()<=i+k-1)
-                i++;
+            if(b[i]<=x)
+                cur++;
             else
+                cur=0;
+            if(cur==k)
             {
                 m--;
-                i+=k;
+                cur=0;
             }
-            while(notBloomed.size() and notBloomed.back()<i)
-                notBloomed.pop_back();
-            if(m==0 and i<=n)
-                return true;
         }
-        return false;
+        return m<=0;
     }
     int minDays(vector<int>& bloomDay, int m, int k) {
         n=bloomDay.size();
