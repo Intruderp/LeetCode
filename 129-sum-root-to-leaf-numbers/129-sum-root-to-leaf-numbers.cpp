@@ -11,28 +11,15 @@
  */
 class Solution {
 public:
-    string num;
-    int dfs(TreeNode* root)
+    int dfs(TreeNode* root,int num)
     {
         if(root==NULL)
             return 0;
         if(root->left==NULL and root->right==NULL)
-        {
-            int x=root->val,mul=10,n=num.length();
-            for(int i=n-1;i>=0;i--)
-            {
-                x+=(num[i]-'0')*mul;
-                if(i>0)
-                mul*=10;
-            }
-            return x;
-        }
-        num.push_back('0'+root->val);
-        int sum=dfs(root->left)+dfs(root->right);
-        num.pop_back();
-        return sum;
+           return num*10+root->val;
+        return dfs(root->left,num*10+root->val)+dfs(root->right,num*10+root->val);
     }
     int sumNumbers(TreeNode* root) {
-        return dfs(root);
+        return dfs(root,0);
     }
 };
