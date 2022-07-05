@@ -11,37 +11,25 @@
  */
 class Solution {
 public:
-    unordered_map<TreeNode*,int> m;
-    long long totalSum,res=0,sum;
+    long long totalSum,res=0;
     int dfs(TreeNode* root)
     {
         if(root==NULL)
             return 0;
         int curSum=root->val;
         curSum+=dfs(root->left)+dfs(root->right);
-        return m[root]=curSum;
+        res=max(res,curSum*(totalSum-curSum));
+        return curSum;
     }
-    void help(TreeNode* root)
+    int sum(TreeNode* root)
     {
         if(root==NULL)
-            return ;
-        if(root->left!=NULL)
-        {
-            sum=m[root->left];
-            res=max(res,sum*(totalSum-sum));
-        }
-        if(root->right!=NULL)
-        {
-            sum=m[root->right];
-            res=max(res,sum*(totalSum-sum));
-        }
-        help(root->left);
-        help(root->right);
+            return 0;
+        return root->val+sum(root->left)+sum(root->right);
     }
     int maxProduct(TreeNode* root) {
+        totalSum=sum(root);
         dfs(root);
-        totalSum=m[root];
-        help(root);
         return res%1000000007;
     }
 };
