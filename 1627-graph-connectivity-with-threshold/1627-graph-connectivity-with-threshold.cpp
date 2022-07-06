@@ -35,15 +35,11 @@ class Solution {
 public:
     vector<bool> areConnected(int n, int threshold, vector<vector<int>>& queries) {
         DSU dsu(n);
-        vector<int> v(n+1,-1);
         for(int t=threshold+1;t<=n;t++)
         {
-            for(int i=t;i<=n;i+=t)
+            for(int i=t*2;i<=n;i+=t)
             {
-                if(v[t]==-1)
-                    v[t]=i;
-                else if(v[t]!=i)
-                    dsu.uni(v[t],i);
+                dsu.uni(i,t);
             }
         }
         vector<bool> res;
