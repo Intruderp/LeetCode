@@ -1,33 +1,30 @@
 class Solution {
 public:
-    int dp[101][101];
-    bool help(int i,int j,int k,string &s,string &y,string &z)
-    {
-        if(k==z.length() and i==s.length() and j==y.length())
-            return true;
-        if(k==z.length())
-            return false;
-        if((i==s.length() and j==y.length()) or (z[k]!=s[i] and z[k]!=y[j]))
-            return false;
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-        bool ans=false;
-        if(i<s.length())
-        {
-            if(s[i]==z[k])
-                ans=ans || help(i+1,j,k+1,s,y,z);
-        }
-        if(j<y.length())
-        {
-            if(y[j]==z[k])
-                ans=ans || help(i,j+1,k+1,s,y,z);
-        }
-        return dp[i][j]=ans;
-        
-    }
     bool isInterleave(string s1, string s2, string s3) 
     {
-        memset(dp,-1,sizeof(dp));
-        return help(0,0,0,s1,s2,s3);
+        int n=s1.length(),m=s2.length();
+        if(n+m!=s3.length())
+            return false;
+        vector<vector<bool>> dp(n+1,vector<bool>(m+1,false));
+        dp[0][0]=true;
+        for(int i=1;i<=n;i++)
+        {
+            dp[i][0]=(dp[i-1][0] and s1[i-1]==s3[i-1]);
+        }
+        for(int j=1;j<=m;j++)
+        {
+            dp[0][j]=(dp[0][j-1] and s2[j-1]==s3[j-1]);
+        }
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=m;j++)
+            {
+                if(s3[i+j-1]==s1[i-1] and dp[i-1][j])
+                    dp[i][j]=true;
+                if(s3[i+j-1]==s2[j-1] and dp[i][j-1])
+                    dp[i][j]=true;
+            }
+        }
+        return dp[n][m];
     }
 };
