@@ -14,10 +14,9 @@ public:
         }
         if(mx>(n+1)/2)
             return "";
-        string res=s;
         while(freq[m-'a'])
         {
-            res[ind]=m;
+            s[ind]=m;
             ind+=2;
             freq[m-'a']--;
         }
@@ -27,10 +26,10 @@ public:
             {
                 if(ind>=n)
                     ind=1;
-                res[ind]=(i+'a');
+                s[ind]=(i+'a');
                 ind+=2;
             }
         }
-        return res;
+        return s;
     }
 };
