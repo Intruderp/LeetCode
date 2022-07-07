@@ -9,30 +9,30 @@
  */
 class Solution {
 public:
-    unordered_map<TreeNode*,vector<TreeNode*>> adj;
+    vector<int> adj[501];
     void dfs(TreeNode* root)
     {
         if(root->left)
         {
-            adj[root].push_back(root->left);
-            adj[root->left].push_back(root);
+            adj[root->val].push_back(root->left->val);
+            adj[root->left->val].push_back(root->val);
             dfs(root->left);
         }
         if(root->right)
         {
-            adj[root].push_back(root->right);
-            adj[root->right].push_back(root);
+            adj[root->val].push_back(root->right->val);
+            adj[root->right->val].push_back(root->val);
             dfs(root->right);
         }
     }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) 
     {
         dfs(root);
-        queue<TreeNode*> q;
+        queue<int> q;
         int level=0;
         vector<int> res,vis(501,0);
         vis[target->val]=1;
-        q.push(target);
+        q.push(target->val);
         while(!q.empty())
         {
             int sz=q.size();
@@ -41,14 +41,14 @@ public:
                 auto f=q.front();
                 q.pop();
                 if(level==k)
-                    res.push_back(f->val);
+                    res.push_back(f);
                 else if(level>k)
                     return res;
                 for(auto &child:adj[f])
                 {
-                    if(vis[child->val]==0)
+                    if(vis[child]==0)
                     {
-                        vis[child->val]=1;
+                        vis[child]=1;
                         q.push(child);
                     }
                 }
