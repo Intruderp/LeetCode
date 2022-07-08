@@ -3,11 +3,11 @@ public:
     int snakesAndLadders(vector<vector<int>>& board) {
         int n=board.size(),row,col,num,newJ;
         vector<int> dist(n*n+1,INT_MAX);
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> q;
+        queue<pair<int,int>> q;
         q.push({0,1});
         while(!q.empty())
         {
-            auto t=q.top();
+            auto t=q.front();
             q.pop();
             if(dist[t.second]<t.first)
                 continue;
