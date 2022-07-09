@@ -2,21 +2,17 @@ class Solution {
 public:
     int maxResult(vector<int>& nums, int k) {
         int n=nums.size();
-        vector<int> dp(n,INT_MIN);
+        vector<int> dp(n);
         dp[0]=nums[0];
-        map<int,int> m;
-        m[dp[0]]=1;
+        deque<int> q{0};
         for(int i=1;i<n;i++)
         {
-            if(i-k-1>=0)
-            {
-                m[dp[i-k-1]]--;
-                if(m[dp[i-k-1]]==0)
-                    m.erase(dp[i-k-1]);
-            }
-            dp[i]=(--m.end())->first+nums[i];
-            m[dp[i]]++;
-                
+            if(q.front()<i-k)
+                q.pop_front();
+            dp[i]=dp[q.front()]+nums[i];
+            while(!q.empty() and dp[i]>=dp[q.back()])
+                q.pop_back();
+            q.push_back(i);
         }
         return dp[n-1];
     }
