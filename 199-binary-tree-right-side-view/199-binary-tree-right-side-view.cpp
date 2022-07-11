@@ -18,10 +18,8 @@ public:
             return ;
         if(x>=res.size())
             res.push_back(root->val);
-        else
-            res[x]=root->val;
-        dfs(root->left,x+1);
         dfs(root->right,x+1);
+        dfs(root->left,x+1);
     }
     vector<int> rightSideView(TreeNode* root) 
     {
