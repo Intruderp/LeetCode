@@ -1,26 +1,36 @@
-unordered_map<string,int> freq;
-bool comp(string &x,string &y)
-{
-    if(freq[x]==freq[y])
-        return x<y;
-    return freq[x]>freq[y];
-}
+
 class Solution {
 public:
     vector<string> topKFrequent(vector<string>& words, int k) {
-        freq.clear();
+        unordered_map<string,int> freq;
         for(auto &word:words)
             freq[word]++;
-        sort(words.begin(),words.end(),comp);
-        vector<string> res;
-        for(auto &word:words)
+        priority_queue<pair<int,string>> q;
+        for(auto &it:freq)
         {
-            if(res.size() and res.back()==word)
-                continue;
-            res.push_back(word);
-            if(res.size()==k)
-                break;
+            if(q.size()<k)
+                q.push({-it.second,it.first});
+            else
+            {
+                if(q.top().first*(-1)<it.second)
+                {
+                    q.pop();
+                    q.push({-it.second,it.first});
+                }
+                else if(q.top().first*(-1)==it.second and it.first<q.top().second)
+                {
+                    q.pop();
+                    q.push({-it.second,it.first});
+                }
+            }
         }
+        vector<string> res;
+        while(!q.empty())
+        {
+            res.push_back(q.top().second);
+            q.pop();
+        }
+        reverse(res.begin(),res.end());
         return res;
     }
 };
