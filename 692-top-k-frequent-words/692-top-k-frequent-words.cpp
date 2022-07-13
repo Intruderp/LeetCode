@@ -8,21 +8,9 @@ public:
         priority_queue<pair<int,string>> q;
         for(auto &it:freq)
         {
-            if(q.size()<k)
-                q.push({-it.second,it.first});
-            else
-            {
-                if(q.top().first*(-1)<it.second)
-                {
-                    q.pop();
-                    q.push({-it.second,it.first});
-                }
-                else if(q.top().first*(-1)==it.second and it.first<q.top().second)
-                {
-                    q.pop();
-                    q.push({-it.second,it.first});
-                }
-            }
+            q.push({-it.second,it.first});
+            if(q.size()>k)
+                q.pop();
         }
         vector<string> res;
         while(!q.empty())
