@@ -6,8 +6,9 @@ public:
         for(auto &num:arr)
         {
             if(dp.count(num-difference))
-                dp[num]=max(dp[num],dp[num-difference]+1);
-            dp[num]=max(dp[num],1);
+                dp[num]=dp[num-difference]+1;
+            else
+                dp[num]=1;
             res=max(res,dp[num]);
         }
         return res;
