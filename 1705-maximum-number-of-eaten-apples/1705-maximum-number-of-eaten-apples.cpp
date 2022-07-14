@@ -7,16 +7,15 @@ public:
         for(int i=0;i<n;i++)
         {
             if(apples[i])
-                q.push({i+days[i],i});
+                q.push({i+days[i],apples[i]});
             while(!q.empty() and day>q.top().first)
                 q.pop();
             if(q.size())
             {
                 auto temp=q.top();
-                if(apples[temp.second]>1)
-                    apples[temp.second]--;
-                else
-                    q.pop();
+                q.pop();
+                if(temp.second>1)
+                    q.push({temp.first,temp.second-1});
                 cnt++;
             }
             day++;
@@ -30,10 +29,9 @@ public:
             cnt++;
             day++;
             auto temp=q.top();
-            if(apples[temp.second]>1)
-                apples[temp.second]--;
-            else
-                q.pop();
+            q.pop();
+            if(temp.second>1)
+                q.push({temp.first,temp.second-1});
         }
         return cnt;
     }
