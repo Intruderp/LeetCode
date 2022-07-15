@@ -7,7 +7,7 @@ public:
         pre[0]=nums[0];
         for(int i=1;i<n;i++)
             pre[i]+=pre[i-1]+nums[i];
-        while(j<n-1 and i<n-2)
+        while(j<n-1)
         {
             l+=nums[i];
             m-=nums[i];
