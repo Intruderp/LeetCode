@@ -1,32 +1,24 @@
 class Solution {
 public:
-    vector<int> res;
-    bool dfs(int cur,int mul,int level,int label)
+    vector<int> pathInZigZagTree(int label)
     {
-        if(cur==label)
+        vector<int> res;
+        res.push_back(label);
+        int height=log2(label),p=pow(2,height),posn,par;
+        while(res.back()!=1)
         {
-            res.push_back(cur);
-            return true;
+            posn=(res.back()-p+2)/2;
+            if(height%2)
+                posn=(p*2-res.back()+1)/2;
+            p/=2;
+            height--;
+            par=p+posn-1;
+            if(height%2)
+                par=p*2-posn;
+            res.push_back(par);
+            
         }
-        if(cur>label)
-            return false;
-        res.push_back(cur);
-        int posn=cur-mul+1,child=mul*2*2-1-(posn-1)*2,x=-1;
-        if(level%2)
-        {
-            posn=mul*2-cur;
-            child=mul*2+(posn-1)*2;
-            x=1;
-        }
-        if(dfs(child,mul*2,level+1,label))
-            return true;
-        if(dfs(child+x,mul*2,level+1,label))
-            return true;
-        res.pop_back();
-        return false;
-    }
-    vector<int> pathInZigZagTree(int label) {
-        dfs(1,1,0,label);
+        reverse(res.begin(),res.end());
         return res;
     }
 };
