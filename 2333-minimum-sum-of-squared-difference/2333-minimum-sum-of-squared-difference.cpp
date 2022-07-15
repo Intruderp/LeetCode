@@ -2,8 +2,8 @@ class Solution {
 public:
     long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2)
     {
-        unordered_map<int,int> diff;
-        int n=nums1.size(),d=0;
+        vector<int> diff(100001,0);
+        int n=nums1.size(),d=0,mx;
         long long res=0,x;
         for(int i=0;i<n;i++)
         {
@@ -11,13 +11,9 @@ public:
             d=max(d,abs(nums1[i]-nums2[i]));
         }
         k1+=k2;
+        mx=d;
         while(d and k1)
         {
-            if(diff.count(d)==0)
-            {
-                d--;
-                continue;
-            }
             if(diff[d]>k1)
             {
                 diff[d]-=k1;
@@ -32,10 +28,10 @@ public:
             }
             d--;
         }
-        for(auto &it:diff)
+        for(int i=1;i<=mx;i++)
         {
-            x=it.first;
-            res+=x*x*it.second;
+            x=i;
+            res+=x*x*diff[i];
         }
         return res;
     }
