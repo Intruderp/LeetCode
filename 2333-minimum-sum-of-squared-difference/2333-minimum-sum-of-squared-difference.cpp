@@ -28,7 +28,7 @@ public:
             {
                 k1-=diff[d];
                 diff[d-1]+=diff[d];
-                diff.erase(d);
+                diff[d]=0;
             }
             d--;
         }
