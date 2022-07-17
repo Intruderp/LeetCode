@@ -13,8 +13,8 @@ public:
         }
         for(auto &w:worker)
         {
-            pair p={w,INT_MAX};
-            auto it=upper_bound(v.begin(),v.end(),p);
+            pair p={w+1,0};
+            auto it=lower_bound(v.begin(),v.end(),p);
             if(it!=v.begin())
             {
                 it--;
