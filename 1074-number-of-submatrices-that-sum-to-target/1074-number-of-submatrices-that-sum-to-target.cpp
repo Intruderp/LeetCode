@@ -8,12 +8,12 @@ public:
             for(int i=1;i<n;i++)
                 matrix[i][j]+=matrix[i-1][j];
         }
+        unordered_map<int,int> freq;
         for(int i=0;i<n;i++)
         {
             for(int k=i;k<n;k++)
             {
                 sum=0;
-                unordered_map<int,int> freq;
                 freq[0]=1;
                 for(int j=0;j<m;j++)
                 {
@@ -22,6 +22,7 @@ public:
                         res+=freq[sum-target];
                     freq[sum]++;
                 }
+                freq.clear();
             }
         }
         return res;
