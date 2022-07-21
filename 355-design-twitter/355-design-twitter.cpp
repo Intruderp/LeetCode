@@ -8,11 +8,11 @@ public:
     
     /** Compose a new tweet. */
     map<int,unordered_set<int>> followers;
-    map<int,set<pair<int,int>>> feed;
+    map<int,deque<pair<int,int>>> feed;
     int count=0;
     void postTweet(int userId, int tweetId)
     {
-        feed[userId].insert({count,tweetId});
+        feed[userId].push_front({count,tweetId});
         count--;
     }
     
