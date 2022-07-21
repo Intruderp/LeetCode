@@ -10,13 +10,17 @@
  */
 class Solution {
 public:
-    ListNode* reverse(ListNode* head,ListNode* prev,ListNode* c)
+    ListNode* reverse(ListNode* head,ListNode* c)
     {
-        if(head==c)
-            return prev;
-        ListNode *temp=reverse(head->next,head,c);
-        head->next=prev;
-        return temp;
+        ListNode *temp,*prev=NULL;
+        while(head!=c)
+        {
+            temp=head->next;
+            head->next=prev;
+            prev=head;
+            head=temp;
+        }
+        return prev;
     }
     ListNode* reverseBetween(ListNode* head, int left, int right) 
     {
@@ -26,7 +30,7 @@ public:
             a=a->next;
         while(right--)
             c=c->next;
-        ListNode *b=reverse(a,NULL,c);
+        ListNode *b=reverse(a,c);
         a->next=c;
         if(l==1)
             return b;
