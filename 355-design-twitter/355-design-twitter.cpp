@@ -13,6 +13,8 @@ public:
     void postTweet(int userId, int tweetId)
     {
         feed[userId].push_front({count,tweetId});
+        if(feed[userId].size()>10)
+            feed[userId].pop_back();
         count--;
     }
     
@@ -20,24 +22,16 @@ public:
     vector<int> getNewsFeed(int userId)
     {
         vector<int> res;
-        int x=0;
         set<pair<int,int>> s;
         for(auto &tweet:feed[userId])
         {
             s.insert(tweet);
-            x++;
-            if(x==10)
-                break;
         }
         for(auto &follower:followers[userId])
         {
-            x=0;
             for(auto &tweet:feed[follower])
             {
                 s.insert(tweet);
-                x++;
-                if(x==10)
-                    break;
             }
         }
         for(auto tweet:s)
