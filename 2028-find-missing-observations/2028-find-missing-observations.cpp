@@ -5,11 +5,10 @@ public:
         vector<int> res;
         if(sum<n or sum>n*6)
             return res;
-        int x=1,r;
+        int x=1;
         for(int i=1;i<=n;)
         {
-            r=n-i;
-            if(r*6<(sum-x))
+            if((n-i)*6<(sum-x))
             {
                 x++;
                 continue;
