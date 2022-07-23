@@ -2,20 +2,18 @@ class Solution {
 public:
     int countTriplets(vector<int>& nums) 
     {
-        unordered_map<int,int> m;
+        int mx=1<<16;
+        vector<int> cnt(mx,0);
         for(int &a:nums)
         {
             for(int &b:nums)
-                m[a&b]++;
+                cnt[a&b]++;
         }
         int res=0;
         for(int &num:nums)
         {
-            for(auto &a:m)
-            {
-                if((a.first&num)==0)
-                    res+=a.second;
-            }
+            for(int i=0;i<mx;i++)
+                res+=(num&i)==0 ? cnt[i]:0;
         }
         return res;
     }
