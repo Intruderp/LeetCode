@@ -11,24 +11,19 @@
  */
 class Solution {
 public:
-    unordered_map<TreeNode*,int> subTreeSize;
-    int help(TreeNode* root)
+    vector<int> sum(TreeNode* root,int &res)
     {
+        vector<int> v(2,0);
         if(root==NULL)
-            return 0;
-        int sz=1+help(root->left)+help(root->right);
-        return subTreeSize[root]=sz;
-    }
-    int sum(TreeNode* root,int &res)
-    {
-        if(root==NULL)
-            return 0;
-        int s=root->val+sum(root->left,res)+sum(root->right,res);
-        res+=s/subTreeSize[root]==root->val;
-        return s;
+            return v;
+        vector<int> left=sum(root->left,res);
+        vector<int> right=sum(root->right,res);
+        v[0]=left[0]+right[0]+root->val;
+        v[1]=1+left[1]+right[1];
+        res+=v[0]/v[1]==root->val;
+        return v;
     }
     int averageOfSubtree(TreeNode* root) {
-        help(root);
         int res=0;
         sum(root,res);
         return res;
