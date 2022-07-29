@@ -8,15 +8,13 @@ public:
         {
             if(match[x[i]-'a']!=-1 and match[x[i]-'a']!=y[i]-'a')
                 return false;
+            if(match[x[i]-'a']==-1)
+            {
+                if(freq[y[i]-'a'])
+                    return false;
+                freq[y[i]-'a']=1;
+            }
             match[x[i]-'a']=y[i]-'a';
-        }
-        for(int i=0;i<26;i++)
-        {
-            if(match[i]==-1)
-                continue;
-            freq[match[i]]++;
-            if(freq[match[i]]>1)
-                return false;
         }
         return true;
     }
