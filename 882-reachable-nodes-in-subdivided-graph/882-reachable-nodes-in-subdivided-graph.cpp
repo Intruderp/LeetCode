@@ -16,8 +16,6 @@ public:
         {
             auto t=q.top();
             q.pop();
-            if(dist[t.second]<t.first)
-                continue;
             for(auto &edge:adj[t.second])
             {
                 if(dist[edge.first]>t.first+edge.second)
