@@ -7,16 +7,10 @@ public:
     
     bool book(int start, int end) 
     {
-        auto it=intervals.lower_bound({start,0});
-        if(it!=intervals.end() and end>it->first)
+        auto it=intervals.lower_bound({start+1,0});
+        if(it!=intervals.end() and end>it->second)
             return false;
-        if(it!=intervals.begin() and intervals.size()>0)
-        {
-            it--;
-            if(start<it->second)
-                return false;
-        }
-        intervals.insert({start,end});
+        intervals.insert({end,start});
         return true;
     }
 };
