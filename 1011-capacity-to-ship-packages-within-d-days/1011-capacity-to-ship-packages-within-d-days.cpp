@@ -2,7 +2,7 @@ class Solution {
 private: 
     bool check(vector<int> &weights,int x,int n,int days)
     {
-        int cur=0,req=0;
+        int cur=0,req=1;
         for(int i=0;i<n;i++)
         {
             if(cur+weights[i]<=x)
@@ -17,9 +17,7 @@ private:
             if(req>days)
                 return false;
         }
-        if(cur)
-            req++;
-        return req<=days;
+        return true;
     }
 public:
     int shipWithinDays(vector<int>& weights, int days) 
