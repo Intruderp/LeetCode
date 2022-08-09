@@ -5,9 +5,7 @@ public:
         long long res=0;
         unordered_map<int,int> freq;
         for(int i=0;i<n;i++)
-            freq[i-nums[i]]++;
-        for(int i=0;i<n;i++)
-            res+=n-freq[i-nums[i]];
-        return res/2;
+            res+=i-freq[i-nums[i]]++;
+        return res;
     }
 };
