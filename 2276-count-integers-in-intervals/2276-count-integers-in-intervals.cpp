@@ -13,19 +13,12 @@ public:
         pair<int,int> p={left,0};
         auto it=s.lower_bound(p);
         set<pair<int,int>> temp;
-        while(it!=s.end())
+        while(it!=s.end() and it->second<=right)
         {
-            if(it->second>right)
-                break;
-            temp.insert(*it);
             right=max(right,it->first);
             L=min(L,it->second);
-            it++;
-        }
-        for(auto &it:temp)
-        {
-            s.erase(it);
-            res-=it.first-it.second+1;
+            res-=it->first-it->second+1;
+            s.erase(it++);
         }
         res+=right-L+1;
         s.insert({right,L});
