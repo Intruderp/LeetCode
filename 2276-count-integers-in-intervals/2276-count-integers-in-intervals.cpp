@@ -12,7 +12,6 @@ public:
         int L=left;
         pair<int,int> p={left,0};
         auto it=s.lower_bound(p);
-        set<pair<int,int>> temp;
         while(it!=s.end() and it->second<=right)
         {
             right=max(right,it->first);
