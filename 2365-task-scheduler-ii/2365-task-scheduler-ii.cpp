@@ -2,7 +2,7 @@ class Solution {
 public:
     long long taskSchedulerII(vector<int>& tasks, int space) {
         long long day=0;
-        map<int,long> prev;
+        unordered_map<int,long> prev;
         for(auto &task:tasks)
         {
             day++;
