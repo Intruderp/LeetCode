@@ -3,7 +3,7 @@ public:
     int dp[300][26][26];
     int dist(int x,int y)
     {
-        int r1=(x+6)/6,r2=(y+6)/6,c1=x-(x/6)*6+1,c2=y-(y/6)*6+1;
+        int r1=(x+6)/6,r2=(y+6)/6,c1=x%6,c2=y%6;
         return abs(r1-r2)+abs(c1-c2);
     }
     int help(int i,int f1,int f2,string &s)
