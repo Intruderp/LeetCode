@@ -1,13 +1,27 @@
 class Solution {
 public:
+    bool check(int x)
+    {
+        int low=0,high=x;
+        long mid;
+        while(low<=high)
+        {
+            mid=(high+low)/2;
+            if(mid*mid==x)
+                return true;
+            if(mid*mid>x)
+                high=mid-1;
+            else
+                low=mid+1;
+        }
+        return false;
+    }
     bool judgeSquareSum(int c) 
     {
         unordered_set<int> s;
         for(long i=0;i*i<=c;i++)
-            s.insert(i*i);
-        for(long a=0;a*a<=c;a++)
         {
-            if(s.count(c-a*a))
+            if(check(c-i*i))
                 return true;
         }
         return false;
