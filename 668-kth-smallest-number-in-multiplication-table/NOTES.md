@@ -1,1 +1,1 @@
-​
+answer is the smallest number x such that there are k numbers less than or equal to x.
