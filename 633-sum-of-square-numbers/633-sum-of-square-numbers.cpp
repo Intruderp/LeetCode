@@ -18,7 +18,6 @@ public:
     }
     bool judgeSquareSum(int c) 
     {
-        unordered_set<int> s;
         for(long i=0;i*i<=c;i++)
         {
             if(check(c-i*i))
