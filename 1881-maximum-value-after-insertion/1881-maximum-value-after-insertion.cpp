@@ -13,7 +13,6 @@ public:
                     return n;
                 }
             }
-            n.push_back('0'+x);
         }
         else
         {
@@ -25,8 +24,8 @@ public:
                     return n;
                 }
             }
-            n.push_back('0'+x);
         }
+        n.push_back('0'+x);
         return n;
     }
 };
