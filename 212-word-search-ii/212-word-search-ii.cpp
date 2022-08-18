@@ -33,17 +33,6 @@ public:
         }
         node->flag=true;
     }
-    bool search(string &word)
-    {
-        Node* node=root;
-        for(char &c:word)
-        {
-            if(!node->containsKey(c))
-                return false;
-            node=node->get(c);
-        }
-        return true;
-    }
     Node* getRoot()
     {
         return root;
