@@ -15,23 +15,13 @@ public:
     vector<vector<int>> findSolution(CustomFunction& customfunction, int z) 
     {
         vector<vector<int>> res;
-        int low,high,mid;
+        int y=1000;
         for(int x=1;x<=1000;x++)
         {
-            low=1,high=1000;
-            while(low<=high)
-            {
-                mid=(high+low)/2;
-                if(customfunction.f(x,mid)==z)
-                {
-                    res.push_back({x,mid});
-                    break;
-                }
-                if(customfunction.f(x,mid)>z)
-                    high=mid-1;
-                else
-                    low=mid+1;
-            }
+            while(y>1 and customfunction.f(x,y)>z)
+                y--;
+            if(customfunction.f(x,y)==z)
+                res.push_back({x,y});
         }
         return res;
     }
