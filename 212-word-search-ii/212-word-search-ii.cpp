@@ -43,7 +43,7 @@ private:
     int dx[4]={0,0,1,-1};
     int dy[4]={1,-1,0,0};
 public:
-    void dfs(int i,int j,int &n,int &m,string &s,Node* root,vector<vector<char>>& board,vector<vector<int>> &vis,unordered_set<string> &x)
+    void dfs(int i,int j,int &n,int &m,string &s,Node* root,vector<vector<char>>& board,vector<vector<int>> &vis,vector<string> &res)
     {
         if(i<0 or j<0 or i>=n or j>=m or vis[i][j])
             return ;
@@ -52,10 +52,13 @@ public:
             root=root->get(board[i][j]);
             s.push_back(board[i][j]);
             if(root->flag)
-                x.insert(s);
+            {
+                res.push_back(s);
+                root->flag=false;
+            }
             vis[i][j]=1;
             for(int d=0;d<4;d++)
-                dfs(i+dx[d],j+dy[d],n,m,s,root,board,vis,x);
+                dfs(i+dx[d],j+dy[d],n,m,s,root,board,vis,res);
             s.pop_back();
             vis[i][j]=0;
         }
@@ -68,16 +71,15 @@ public:
         Node* root=trie.getRoot();
         for(auto &word:words)
             trie.insert(word);
-        unordered_set<string> x;
+        vector<string> res;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
                 string s;
-                dfs(i,j,n,m,s,root,board,vis,x);
+                dfs(i,j,n,m,s,root,board,vis,res);
             }
         }
-        vector<string> res{x.begin(),x.end()};
         return res;
         
     }
