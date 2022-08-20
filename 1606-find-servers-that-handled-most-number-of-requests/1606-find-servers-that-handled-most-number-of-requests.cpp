@@ -3,7 +3,7 @@ public:
     vector<int> busiestServers(int k, vector<int>& arrival, vector<int>& load) {
         int maxi=0,n=arrival.size(),server;
         set<int> available;
-        unordered_map<int,int> cnt;
+        vector<int> cnt(k,0),res;
         for(int i=0;i<k;i++)
             available.insert(i);
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
@@ -25,11 +25,10 @@ public:
             available.erase(server);
             maxi=max(maxi,++cnt[server]);
         }
-        vector<int> res;
-        for(auto &it:cnt)
+        for(int i=0;i<k;i++)
         {
-            if(it.second==maxi)
-                res.push_back(it.first);
+            if(cnt[i]==maxi)
+                res.push_back(i);
         }
         return res;
     }
