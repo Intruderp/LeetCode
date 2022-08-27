@@ -3,18 +3,11 @@ public:
     vector<int> bfs(int src,int &n,vector<int> &adj)
     {
         vector<int> dist(n,INT_MAX);
-        dist[src]=0;
-        queue<int> q;
-        q.push(src);
-        while(!q.empty())
+        int d=0;
+        while(src!=-1 and dist[src]==INT_MAX)
         {
-            auto f=q.front();
-            q.pop();
-            if(adj[f]!=-1 and dist[adj[f]]==INT_MAX)
-            {
-                dist[adj[f]]=1+dist[f];
-                q.push(adj[f]);
-            }
+            dist[src]=d++;
+            src=adj[src];
         }
         return dist;
     }
