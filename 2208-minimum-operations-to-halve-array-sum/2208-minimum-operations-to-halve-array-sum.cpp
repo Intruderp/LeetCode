@@ -11,8 +11,8 @@ public:
         {
             double t=pq.top();
             pq.pop();
-            curSum-=t-t/2;
-            pq.push(t-t/2);
+            curSum-=t/2;
+            pq.push(t/2);
             res++;
         }
         return res;
