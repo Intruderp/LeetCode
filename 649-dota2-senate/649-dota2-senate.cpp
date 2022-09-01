@@ -2,8 +2,8 @@ class Solution {
 public:
     string predictPartyVictory(string senate)
     {
-        deque<int> R,D;
-        int n=senate.length();
+        deque<int> R,D,temp,temp2;
+        int n=senate.length(),x,y;
         for(int i=0;i<n;i++)
         {
             if(senate[i]=='D')
@@ -13,7 +13,6 @@ public:
         }
         while(R.size()>0 and D.size()>0)
         {
-            deque<int> temp,temp2;
             while(R.size()>0 or D.size()>0)
             {
                 if(D.size()==0)
@@ -36,7 +35,7 @@ public:
                 }
                 else
                 {
-                    int x=R.front(),y=D.front();
+                    x=R.front(),y=D.front();
                     D.pop_front();
                     R.pop_front();
                     if(x<y)
@@ -52,6 +51,8 @@ public:
             }
             R=temp;
             D=temp2;
+            temp.clear();
+            temp2.clear();
         }
         return D.size()>0 ? "Dire":"Radiant";
     }
