@@ -15,10 +15,10 @@ public:
     {
         queue<TreeNode*> q;
         q.push(root);
-        int level=0;
+        int level=0,sz,mini,maxi;
         while(!q.empty())
         {
-            int sz=q.size(),mini=INT_MAX,maxi=0;
+            sz=q.size(),mini=INT_MAX,maxi=0;
             while(sz--)
             {
                 auto f=q.front();
