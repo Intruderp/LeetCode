@@ -11,29 +11,22 @@
  */
 class Solution {
 public:
-    bool check(TreeNode* node)
-    {
-        if(node==NULL)
-            return false;
-        if(node->val==1)
-            return true;
-        return check(node->left) or check(node->right);
-    }
-    void dfs(TreeNode* root)
+    bool dfs(TreeNode* root,TreeNode* par,char dir)
     {
         if(root==NULL)
-            return ;
-        if(!check(root->left))
-            root->left=NULL;
-        else
-            dfs(root->left);
-        if(!check(root->right))
-            root->right=NULL;
-        else
-            dfs(root->right);
+            return false;
+        bool left=dfs(root->left,root,'L');
+        bool right=dfs(root->right,root,'R');
+        bool exist=left or right or root->val==1;
+        if(!exist)
+        {
+            if(par!=NULL)
+                dir=='L' ? par->left=NULL: par->right=NULL;
+        }
+        return exist;
     }
     TreeNode* pruneTree(TreeNode* root) {
-        dfs(root);
+        dfs(root,NULL,'X');
         if(root->left==NULL and root->right==NULL and root->val==0)
             return NULL;
         return root;
