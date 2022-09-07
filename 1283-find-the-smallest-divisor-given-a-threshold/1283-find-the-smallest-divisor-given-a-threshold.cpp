@@ -12,7 +12,6 @@ public:
     }
     int smallestDivisor(vector<int>& nums, int threshold)
     {
-        sort(nums.rbegin(),nums.rend());
         int low=1,high=1e6,smallestDiv=high,mid;
         while(low<=high)
         {
