@@ -2,7 +2,7 @@ class Solution {
 public:
     int maximumGroups(vector<int>& grades)
     {
-        int n=grades.size(),low=1,high=n,maxG=0;
+        int n=grades.size(),low=1,high=1000,maxG=0;
         long mid;
         while(low<=high)
         {
