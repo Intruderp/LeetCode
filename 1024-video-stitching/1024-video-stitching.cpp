@@ -12,7 +12,7 @@ public:
         if(clips[i][0]<=cur)
             return dp[i][cur]=min(help(i+1,max(cur,clips[i][1]),time,clips)+1,help(i+1,cur,time,clips));
         else
-            return dp[i][cur]=help(i+1,cur,time,clips);
+            return dp[i][cur]=10000;
         
     }
     int videoStitching(vector<vector<int>>& clips, int time) 
