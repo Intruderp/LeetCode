@@ -6,10 +6,9 @@ public:
         for(auto &property:properties)
             property[1]*=-1;
         sort(properties.begin(),properties.end());
-        for(int i=n-2;i>=0;i--)
+        for(int i=n-1;i>=0;i--)
         {
-            if(properties[i+1][0]!=properties[i][0])
-                maxDefense=max(maxDefense,-properties[i+1][1]);
+            maxDefense=max(maxDefense,-properties[i][1]);
             if(maxDefense>-properties[i][1])
                 weakCharacters++;
         }
