@@ -1,25 +1,22 @@
 class Solution {
 public:
-    int dp[100][101];
-    int help(int i,int cur,int &time,vector<vector<int>> &clips)
-    {
-        if(cur>=time)
-            return 0;
-        if(i==clips.size())
-            return 10000;
-        if(dp[i][cur]!=-1)
-            return dp[i][cur];
-        if(clips[i][0]<=cur)
-            return dp[i][cur]=min(help(i+1,max(cur,clips[i][1]),time,clips)+1,help(i+1,cur,time,clips));
-        else
-            return dp[i][cur]=10000;
-        
-    }
     int videoStitching(vector<vector<int>>& clips, int time) 
     {
+        int i=0,cur=0,n=clips.size(),res=0;
         sort(clips.begin(),clips.end());
-        memset(dp,-1,sizeof(dp));
-        int minClips=help(0,0,time,clips);
-        return minClips<=100 ? minClips:-1;
+        while(cur<time)
+        {
+            int maxi=cur;
+            while(i<n and clips[i][0]<=cur)
+            {
+                maxi=max(maxi,clips[i][1]);
+                i++;
+            }
+            if(maxi==cur)
+                return -1;
+            res++;
+            cur=maxi;   
+        }
+        return res;
     }
 };
