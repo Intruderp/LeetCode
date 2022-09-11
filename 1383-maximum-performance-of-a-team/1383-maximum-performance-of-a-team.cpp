@@ -20,8 +20,7 @@ public:
             }
             q.push(v[i][1]);
             sum+=v[i][1];
-            mini=v[i][0];
-            res=max(res,sum*mini);
+            res=max(res,sum*v[i][0]);
             i--;
         }
         return res%mod;
