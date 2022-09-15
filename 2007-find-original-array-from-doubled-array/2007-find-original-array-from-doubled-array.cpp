@@ -7,21 +7,22 @@ public:
         for(int &i:c)
             m[i]++;
         int n=c.size();
+        if(n%2)
+            return {};
         sort(c.begin(),c.end());
         for(auto &it:c)
         {
-            int x=0;
-            if(it==0)
-                x=1;
-            if(m[2*it]>x and m[it]>0)
+            if(m[it]==0)
+                continue;
+            m[it]--;
+            ans.push_back(it);
+            if(m[it*2]>0)
             {
-                ans.push_back(it);
-                m[it*2]--;
-                m[it]--;
+                m[2*it]--;
             }
+            else
+                return {};
         }
-        if(ans.size()!=(n+1)/2)
-        return v;
         return ans;
     }
 };
