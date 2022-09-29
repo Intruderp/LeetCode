@@ -14,28 +14,16 @@ public:
         }
         else if(ones%3==0)
         {
-            int i=0,j=n-1,start=0,end=0,x=1,y=1;
-            while(end<ones/3)
+            int req=ones/3,ways1=0,ways2=0,cnt=0;
+            for(auto &c:s)
             {
-                end+=s[j]=='1';
-                j--;
+                cnt+=c=='1';
+                if(cnt==req)
+                    ways1++;
+                else if(cnt==req*2)
+                    ways2++;
             }
-            while(s[j]!='1')
-            {
-                y++;
-                j--;
-            }
-            while(start<ones/3)
-            {
-                start+=s[i]=='1';
-                i++;
-            }
-            while(s[i]=='0')
-            {
-                x++;
-                i++;
-            }
-            res=((long)x*y)%mod;
+            res=((long)ways1*ways2)%mod;
         }
         return res;
     }
