@@ -10,33 +10,37 @@ public:
         int n=s.length();
         if(s[0]=='0')
             return 0;
+        int prev1,prev2;
         if(n==1)
             return 1;
-        vector<int> dp(n,0);
-        dp[0]=1;
+        prev2=1;
         if(s[1]!='0')
         {
-            dp[1]=1+poss(s[0],s[1]);
+            prev1=1+poss(s[0],s[1]);
         }
         else
         {
-            dp[1]=poss(s[0],s[1]);
+            prev1=poss(s[0],s[1]);
         }
+        int res=prev1;
         for(int i=2;i<n;i++)
         {
+            res=0;
             if(s[i]=='0')
             {
                 if(s[i-1]!='0' and poss(s[i-1],'0'))
-                    dp[i]=dp[i-2];
+                    res=prev2;
             }
             else
             {
-                dp[i]=dp[i-1];
+                res=prev1;
                 if(s[i-1]!='0' and poss(s[i-1],s[i]))
-                    dp[i]+=dp[i-2];
+                    res+=prev2;
             }
+            prev2=prev1;
+            prev1=res;
         }
-        return dp[n-1];
+        return res;
     }
     
 };
