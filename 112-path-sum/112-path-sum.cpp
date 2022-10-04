@@ -11,23 +11,16 @@
  */
 class Solution {
 public:
-    bool ans;
-    void dfs(TreeNode* root,int sum,int target)
+    bool dfs(TreeNode* root,int sum,int target)
     {
-        if(root==NULL or ans)
-            return ;
+        if(root==NULL)
+            return false;
         if(root->left==NULL and root->right==NULL and (sum+root->val)==target)
-        {
-            ans=true;
-            return ;
-        }
-        dfs(root->left,sum+root->val,target);
-        dfs(root->right,sum+root->val,target);
+            return true;
+        return dfs(root->left,sum+root->val,target) or dfs(root->right,sum+root->val,target);
     }
     bool hasPathSum(TreeNode* root, int targetSum) 
     {
-        ans=false;
-        dfs(root,0,targetSum);
-        return ans;
+        return dfs(root,0,targetSum);
     }
 };
