@@ -11,40 +11,22 @@
  */
 class Solution {
 public:
-    int depthOfTree(TreeNode* root)
+    pair<int,TreeNode*> help(TreeNode* root)
     {
         if(root==NULL)
-            return 0;
-        return max(depthOfTree(root->left),depthOfTree(root->right))+1;
-    }
-    int deepestNodes(TreeNode* root,int curDepth,int maxDepth)
-    {
-        if(root==NULL)
-            return 0;
-        if(curDepth==maxDepth)
-            return 1;
-        return deepestNodes(root->left,curDepth+1,maxDepth)+deepestNodes(root->right,curDepth+1,maxDepth);
-    }
-    int help(TreeNode* root,int &count,int curDepth,int &maxDepth,TreeNode* &res)
-    {
-        if(root==NULL)
-            return 0;
-        int x=0;
-        if(curDepth==maxDepth)
-            x=1;
-        int deepestNodesCnt=help(root->left,count,curDepth+1,maxDepth,res)+help(root->right,count,curDepth+1,maxDepth,res)+x;
-        if(deepestNodesCnt==count and res->val==-1)
-        {
-            res=root;
-        }
-        return deepestNodesCnt;
+            return {0,NULL};
+        auto left=help(root->left),right=help(root->right);
+        int leftDepth=left.first;
+        int rightDepth=right.first;
+        if(leftDepth==rightDepth)
+            return {leftDepth+1,root};
+        else if(leftDepth>rightDepth)
+            return {leftDepth+1,left.second};
+        else
+            return {rightDepth+1,right.second};
     }
     TreeNode* subtreeWithAllDeepest(TreeNode* root) 
     {
-        int depth=depthOfTree(root);
-        int count=deepestNodes(root,1,depth);
-        TreeNode *res=new TreeNode(-1);
-        help(root,count,1,depth,res);
-        return res;
+        return help(root).second;
     }
 };
