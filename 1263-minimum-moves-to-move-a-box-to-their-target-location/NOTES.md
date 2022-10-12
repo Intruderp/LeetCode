@@ -1,1 +1,1 @@
-​
+In BFS states are cur(x,y) postion of box and cur(x,y) position of player
